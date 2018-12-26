@@ -1,0 +1,46 @@
+version: "3"
+services:
+  ansible:
+    container_name: ansible-study
+    hostname: ansible-study
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ansible-study
+    privileged: true
+    tty: true
+    volumes:
+      - ./playbooks:/playbooks
+    networks:
+      - my_network
+
+  centos7.4:
+    container_name: centos7.4-node
+    hostname: centos7.4-node
+    build:
+      context: ./
+      dockerfile: ./servers/centos74/Dockerfile
+    image: centos7.4-node
+    privileged: true
+    tty: true
+    expose:
+      - 22
+    networks:
+      - my_network
+
+  ubuntu16.04:
+    container_name: ubuntu16.04-node
+    hostname: ubuntu16.04-node
+    build:
+      context: ./
+      dockerfile: ./servers/ubuntu1604/Dockerfile
+    image: ubuntu16.04-node
+    privileged: true
+    tty: true
+    expose:
+      - 22
+    networks:
+      - my_network
+
+networks:
+  my_network:
